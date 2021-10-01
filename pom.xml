@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0">
-<!--xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"> -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.solacesystems.tomcat</groupId>
   <artifactId>solwebsample</artifactId>
@@ -7,7 +6,7 @@
   <version>1.0-SNAPSHOT</version>
   <name>solwebsample Maven Webapp</name>
   <url>http://maven.apache.org</url>
-  <!--<dependencies>
+  <dependencies>
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>
@@ -41,7 +40,7 @@
   <build>
     <finalName>solwebsample</finalName>
     <plugins>
-      <!-- Assembles the deploy-friendly package 
+      <!-- Assembles the deploy-friendly package -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -62,5 +61,5 @@
       </plugin>
 
     </plugins>
-  </build> -->
+  </build>
 </project>
