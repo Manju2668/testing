@@ -1,85 +1,54 @@
-MyBatis JPetStore
-=================
+# solwebsample
+Tomcat servlet example using the sol-tomcat intagration for Solace into Apache Tomcat
 
-[![Build Status](https://travis-ci.org/mybatis/jpetstore-6.svg?branch=master)](https://travis-ci.org/mybatis/jpetstore-6)
-[![Coverage Status](https://coveralls.io/repos/github/mybatis/jpetstore-6/badge.svg?branch=master)](https://coveralls.io/github/mybatis/jpetstore-6?branch=master)
-[![Dependency Status](https://www.versioneye.com/user/projects/5619aafaa193340f320005fe/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5619aafaa193340f320005fe)
-[![License](http://img.shields.io/:license-apache-brightgreen.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
+See https://tomcat.apache.org/index.html for details about the Apache Tomcat project.
 
-![mybatis-jpetstore](http://mybatis.github.io/images/mybatis-logo.png)
+## Building
 
-JPetStore 6 is a full web application built on top of MyBatis 3, Spring 4 and Stripes.
+Requires maven, refers to all public maven java resources, 
+builds a sample messaging servlet in a WAR package for deployment 
+to Apache Tomcat app-servers.
 
-Essentials
-----------
+Requires the sample Solace Tomcate JNDI resource integration available 
+at https://github.com/koverton/sol-tomcat
 
-* [See the docs](http://www.mybatis.org/jpetstore-6)
-
-## Other versions that you may want to know about
-
-- JPetstore on top of Spring, Spring MVC, MyBatis 3, and Spring Security https://github.com/making/spring-jpetstore
-- JPetstore with Vaadin and Spring Boot with Java Config https://github.com/igor-baiborodine/jpetstore-6-vaadin-spring-boot
-- JPetstore on MyBatis Spring Boot Starter https://github.com/kazuki43zoo/mybatis-spring-boot-jpetstore
-
-## Run on Application Server
-Running JPetStore sample under Tomcat (using the [cargo-maven2-plugin](https://codehaus-cargo.github.io/cargo/Maven2+plugin.html)).
-
-- Clone this repository
-
-  ```
-  $ git clone https://github.com/mybatis/jpetstore-6.git
-  ```
-
-- Build war file
-
-  ```
-  $ cd jpetstore-6
-  $ ./mvnw clean package
-  ```
-
-- Startup the Tomcat server and deploy web application
-
-  ```
-  $ ./mvnw cargo:run -P tomcat90
-  ```
-
-  > Note:
-  >
-  > We provide maven profiles per application server as follow:
-  >
-  > | Profile    | Description |
-  > | ---------- | ----------- |
-  > | tomcat90   | Running under the Tomcat 9.0 |
-  > | tomcat85   | Running under the Tomcat 8.5 |
-  > | tomcat80   | Running under the Tomcat 8.0 |
-  > | tomcat70   | Running under the Tomcat 7.0 |
-  > | tomee      | Running under the TomEE 7 |
-  > | wildfly12  | Running under the WildFly 12 |
-  > | wildfly11  | Running under the WildFly 11 |
-  > | liberty18  | Running under the WebSphere Liberty 18 |
-  > | liberty17  | Running under the WebSphere Liberty 17 |
-  > | jetty      | Running under the Jetty 9 |
-  > | glassfish5 | Running under the GlassFish 5 |
-  > | glassfish4 | Running under the GlassFish 4 |
-  > | resin      | Running under the Resin 4 |
-
-- Run application in browser http://localhost:8080/jpetstore/ 
-- Press Ctrl-C to stop the server.
-
-
-## Try integration tests
-
-Perform integration tests for screen transition.
-
-> Requires:
->
-> * Running the JPetStore on 8080 port
-> * JDK 8+
-
-```
-$ ./mvnw test -P itest
+```bash
+mvn package
 ```
 
-> Known issues:
->
-> * [Two tests are failed on The WebSphere Liberty](https://github.com/mybatis/jpetstore-6/issues/159).
+Produces `target/solwebsample.war` that can be deployed to Tomcat 
+via it's application manager.
+
+## Deploying 
+
+After the full sol-tomcat library and all dependencies are added 
+to the `$CATALINA_HOME/lib` directory, this application can be 
+deployed to the server by navigating to http://<server>:8080/manager/html
+and using the app-manager form for WAR file deployment.
+
+## Configuring
+
+This example expects the following JNDI resources to be configured:
+
+* jms/ConnectionFactory: a JNDI connection-factory name to be looked up and used for all connections
+* jms/Queue: a JNDI queue name to publish to and consume from
+* jms/Topic: a JNDI topic name to subscribe to
+
+The configurations for these examples can be found in `src/main/resources/conf/context-resources.xml`.
+
+They should be added to the Tomcat server's `$CATALINA_HOME/conf/context.xml` configuration.
+
+## Testing 
+
+The sample application assumes the following entities are provisioned on the Solace broker's default msg-VPN:
+* A queue named 'sample_queue', enabled with full permissions for all
+* A JNDI connection-factory named 'JNDI/CF'
+* A JNDI topic named 'JNDI/topic' mapped to a real Solace topic
+* A JNDI queue named 'JNDI/sample_queue' mapped to the Solace queue 'sample_queue'
+
+A script to create all of these on the default msg-VPN exists in `srd/main/resources/SEMP/SEMP_CREATE.sh`.
+
+After deploying the WAR file and starting the servlet, navigate to the http://localhost:8080/solwebsample 
+link from the Manager page, click on the 'Hello World!' link at the top of the page to issue a GET 
+request to the servlet. This retrieves the latest stats on the messaging activity. If the app is not 
+working you will see an error rather than the standard display.
