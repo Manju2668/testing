@@ -11,7 +11,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <javafx.version>11</javafx.version>
-    <javafx.maven.plugin.version>0.0.6</javafx.maven.plugin.version>
+    <javafx.maven.plugin.version>1.6</javafx.maven.plugin.version>
   </properties>
 
   <dependencies>
