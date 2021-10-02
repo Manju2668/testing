@@ -3,14 +3,14 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.openjfx</groupId>
   <artifactId>hellofx</artifactId>
-  <packaging>jar</packaging>
+  <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>
   <name>demo</name>
   <url>http://maven.apache.org</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <javafx.version>16</javafx.version>
+    <javafx.version>11</javafx.version>
     <javafx.maven.plugin.version>0.0.6</javafx.maven.plugin.version>
   </properties>
 
